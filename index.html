@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Jewels | Elegance Crafted In Every Detail</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --royal-gold: #D4AF37;
+            --champagne-gold: #F7E7CE;
+            --ivory: #FFFFF0;
+            --maroon: #4A0404;
+            --matte-black: #121212;
+            --glass: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(212, 175, 55, 0.3);
+            --transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            --sparkle: radial-gradient(circle, #fff 10%, transparent 20%);
+        }
+
+        [data-theme="light"] {
+            --matte-black: #f8f8f8;
+            --maroon: #f0f0f0;
+            --ivory: #121212;
+            --glass: rgba(0, 0, 0, 0.03);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--matte-black);
+            color: var(--ivory);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        h1, h2, h3, .royal-font {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 2px;
+        }
+
+        /* --- CURSOR EFFECT --- */
+        #cursor {
+            width: 8px; height: 8px; background: var(--royal-gold);
+            border-radius: 50%; position: fixed; pointer-events: none; z-index: 10000;
+        }
+        #cursor-glow {
+            width: 35px; height: 35px; border: 1px solid var(--royal-gold);
+            border-radius: 50%; position: fixed; pointer-events: none; z-index: 9999;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* --- SECTION 1: CINEMATIC LOADER --- */
+        #loader {
+            position: fixed; inset: 0; background: var(--maroon);
+            display: flex; flex-direction: column; justify-content: center;
+            align-items: center; z-index: 11000; transition: 1s ease-in-out;
+        }
+        .loader-ring {
+            width: 80px; height: 80px; border: 2px solid transparent;
+            border-top: 2px solid var(--royal-gold); border-radius: 50%;
+            animation: rotate 2s linear infinite; position: relative;
+        }
+        .loader-ring::after {
+            content: '💎'; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+        }
+        @keyframes rotate { to { transform: rotate(360deg); } }
+        .loader-text { margin-top: 20px; color: var(--royal-gold); letter-spacing: 4px; font-size: 0.7rem; font-weight: 600; }
+
+        /* --- SECTION 2: LUXURY NAVBAR --- */
+        nav {
+            position: fixed; top: 0; width: 100%; padding: 25px 8%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 1000; transition: var(--transition);
+        }
+        nav.scrolled {
+            padding: 15px 8%; background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(20px); border-bottom: 1px solid var(--glass-border);
+        }
+        .logo { font-size: 1.8rem; font-weight: 700; color: var(--royal-gold); }
+        .nav-links { display: flex; gap: 30px; list-style: none; }
+        .nav-links a { 
+            text-decoration: none; color: var(--ivory); font-size: 0.8rem; 
+            text-transform: uppercase; transition: 0.3s;
+        }
+        .nav-links a:hover { color: var(--royal-gold); }
+
+        /* --- SECTION 3: HERO SECTION --- */
+        .hero {
+            height: 100vh; display: flex; align-items: center; padding: 0 8%;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+                        url('https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover; background-position: center; position: relative;
+        }
+        .hero-content { max-width: 800px; z-index: 10; }
+        .badge {
+            border: 1px solid var(--royal-gold); color: var(--royal-gold);
+            padding: 5px 15px; font-size: 0.7rem; display: inline-block; margin-bottom: 20px;
+        }
+        .hero h1 { font-size: 4.5rem; line-height: 1.1; margin-bottom: 20px; }
+        .hero p { font-size: 1.1rem; margin-bottom: 30px; opacity: 0.8; max-width: 500px; }
+        
+        .btn {
+            padding: 15px 35px; border: none; font-size: 0.8rem; font-weight: 600;
+            text-transform: uppercase; transition: var(--transition); text-decoration: none;
+            display: inline-block; position: relative; overflow: hidden;
+        }
+        .btn-gold { background: var(--royal-gold); color: var(--maroon); }
+        .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3); }
+        .btn-outline { border: 1px solid var(--ivory); color: var(--ivory); margin-left: 15px; }
+
+        /* --- PRODUCT CARDS --- */
+        section { padding: 100px 8%; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; }
+        .card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            border-radius: 5px; overflow: hidden; transition: var(--transition);
+            position: relative;
+        }
+        .card:hover { transform: translateY(-10px); background: rgba(212, 175, 55, 0.05); }
+        .card-img { height: 350px; overflow: hidden; position: relative; }
+        .card-img img { width: 100%; height: 100%; object-fit: cover; transition: 0.7s; }
+        .card:hover .card-img img { transform: scale(1.1); }
+        .card-body { padding: 25px; text-align: center; }
+        .price-tag { color: var(--royal-gold); font-size: 0.9rem; margin: 10px 0; font-weight: 600; }
+
+        /* --- SHINE EFFECT --- */
+        .shine {
+            position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.2), transparent);
+            transform: skewX(-25deg); transition: 0.7s;
+        }
+        .card:hover .shine { left: 125%; }
+
+        /* --- BRIDAL SECTION --- */
+        .bridal-promo {
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 50px; align-items: center;
+            background: var(--maroon); padding: 80px; border: 1px solid var(--royal-gold);
+        }
+        .bridal-img { width: 100%; height: 500px; object-fit: cover; border: 1px solid var(--royal-gold); padding: 10px; }
+
+        /* --- FORM --- */
+        .booking-box {
+            max-width: 600px; margin: 0 auto; background: var(--glass);
+            padding: 50px; border: 1px solid var(--glass-border);
+        }
+        input, select, textarea {
+            width: 100%; padding: 15px; background: transparent; border: none;
+            border-bottom: 1px solid var(--glass-border); color: var(--ivory);
+            margin-bottom: 25px; font-family: inherit;
+        }
+        input:focus { outline: none; border-bottom: 1px solid var(--royal-gold); }
+
+        /* --- WHATSAPP --- */
+        .wa-float {
+            position: fixed; bottom: 30px; right: 30px; width: 60px; height: 60px;
+            background: #25d366; border-radius: 50%; display: flex; justify-content: center;
+            align-items: center; box-shadow: 0 10px 20px rgba(0,0,0,0.3); z-index: 1000;
+        }
+
+        /* --- PARTICLES --- */
+        #dust-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
+
+        /* --- UTILS --- */
+        .reveal { opacity: 0; transform: translateY(30px); transition: 1s all ease; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; }
+            .bridal-promo { grid-template-columns: 1fr; padding: 30px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- LOADER -->
+    <div id="loader">
+        <div class="loader-ring"></div>
+        <p class="loader-text">CRAFTING LUXURY ELEGANCE...</p>
+    </div>
+
+    <!-- CURSOR -->
+    <div id="cursor"></div>
+    <div id="cursor-glow"></div>
+
+    <canvas id="dust-canvas"></canvas>
+
+    <!-- NAVBAR -->
+    <nav id="navbar">
+        <div class="logo">AS <span style="font-weight: 300;">JEWELS</span></div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#collection">Collections</a></li>
+            <li><a href="#bridal">Bridal</a></li>
+            <li><a href="#diamonds">Diamonds</a></li>
+            <li><a href="#appointment">Appointment</a></li>
+        </ul>
+        <div style="display: flex; gap: 15px; align-items: center;">
+            <button onclick="toggleTheme()" style="background:none; border:none; color:var(--royal-gold); font-size:1.2rem;">🌓</button>
+            <a href="#appointment" class="btn btn-gold" style="padding: 10px 20px; font-size: 0.7rem;">Book Visit</a>
+        </div>
+    </nav>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <span class="badge">ESTABLISHED 2004</span>
+            <h1 class="reveal">Timeless Jewellery For Every Celebration</h1>
+            <p class="reveal">Explore our bespoke collection of 22K Gold and certified Diamond jewellery. Handcrafted masterpieces for the modern royalty.</p>
+            <div class="reveal">
+                <a href="#collection" class="btn btn-gold">Explore Collection</a>
+                <a href="#" class="btn btn-outline">WhatsApp Inquiry</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIES -->
+    <section id="collection">
+        <div style="text-align: center; margin-bottom: 60px;">
+            <h2 style="font-size: 2.5rem;">The <span style="color:var(--royal-gold)">Collections</span></h2>
+            <p style="opacity: 0.6; margin-top: 10px;">Exquisite craftsmanship in every carve.</p>
+        </div>
+        <div class="grid">
+            <div class="card reveal">
+                <div class="card-img">
+                    <div class="shine"></div>
+                    <img src="https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?auto=format&fit=crop&q=80&w=600" alt="Gold">
+                </div>
+                <div class="card-body">
+                    <h3 class="royal-font">Royal Gold</h3>
+                    <p class="price-tag">Starting ₹24,999</p>
+                    <a href="#" style="color: var(--royal-gold); font-size: 0.7rem; text-decoration:none; font-weight:700;">VIEW GALLERY</a>
+                </div>
+            </div>
+            <div class="card reveal" style="transition-delay: 0.2s;">
+                <div class="card-img">
+                    <div class="shine"></div>
+                    <img src="https://images.unsplash.com/photo-1605100804763-247f67b3557e?auto=format&fit=crop&q=80&w=600" alt="Diamond">
+                </div>
+                <div class="card-body">
+                    <h3 class="royal-font">Elite Diamonds</h3>
+                    <p class="price-tag">Price on Request</p>
+                    <a href="#" style="color: var(--royal-gold); font-size: 0.7rem; text-decoration:none; font-weight:700;">VIEW GALLERY</a>
+                </div>
+            </div>
+            <div class="card reveal" style="transition-delay: 0.4s;">
+                <div class="card-img">
+                    <div class="shine"></div>
+                    <img src="https://images.unsplash.com/photo-1617038220319-276d3cfab638?auto=format&fit=crop&q=80&w=600" alt="Bridal">
+                </div>
+                <div class="card-body">
+                    <h3 class="royal-font">Bridal Sets</h3>
+                    <p class="price-tag">Starting ₹1,49,999</p>
+                    <a href="#" style="color: var(--royal-gold); font-size: 0.7rem; text-decoration:none; font-weight:700;">VIEW GALLERY</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRIDAL PROMO -->
+    <section id="bridal" style="background: var(--maroon); padding: 0;">
+        <div class="bridal-promo reveal">
+            <div>
+                <h2 style="font-size: 3rem; margin-bottom: 20px; color:var(--royal-gold)">The Wedding Boutique</h2>
+                <p style="margin-bottom: 30px;">From heavy traditional temple jewellery to modern minimalist wedding sets, we curate the perfect look for your special day. Book a private consultation with our bridal stylists.</p>
+                <ul style="list-style: none; margin-bottom: 30px;">
+                    <li style="margin-bottom: 10px;">✨ Free Bridal Trial Sessions</li>
+                    <li style="margin-bottom: 10px;">✨ Customization to match your outfit</li>
+                    <li style="margin-bottom: 10px;">✨ Certified Hallmarked Gold</li>
+                </ul>
+                <a href="#appointment" class="btn btn-gold">Book Private Tour</a>
+            </div>
+            <img src="https://images.unsplash.com/photo-1589128777073-263566ae5e4d?auto=format&fit=crop&q=80&w=800" class="bridal-img" alt="Bridal">
+        </div>
+    </section>
+
+    <!-- STATS -->
+    <section>
+        <div class="grid" style="text-align: center;">
+            <div class="reveal">
+                <h2 style="font-size: 3rem; color: var(--royal-gold);">20+</h2>
+                <p style="text-transform: uppercase; font-size: 0.7rem; opacity: 0.6;">Years of Trust</p>
+            </div>
+            <div class="reveal">
+                <h2 style="font-size: 3rem; color: var(--royal-gold);">5000+</h2>
+                <p style="text-transform: uppercase; font-size: 0.7rem; opacity: 0.6;">Unique Designs</p>
+            </div>
+            <div class="reveal">
+                <h2 style="font-size: 3rem; color: var(--royal-gold);">100%</h2>
+                <p style="text-transform: uppercase; font-size: 0.7rem; opacity: 0.6;">BIS Hallmarked</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- APPOINTMENT -->
+    <section id="appointment">
+        <div class="booking-box reveal">
+            <h2 style="text-align: center; margin-bottom: 40px;">Book An <span style="color:var(--royal-gold)">Appointment</span></h2>
+            <form>
+                <input type="text" placeholder="Full Name">
+                <input type="tel" placeholder="Phone Number">
+                <select>
+                    <option>Select Interest</option>
+                    <option>Bridal Collection</option>
+                    <option>Diamond Purchase</option>
+                    <option>Gold Investment</option>
+                </select>
+                <input type="date">
+                <button class="btn btn-gold" style="width: 100%;">Confirm Booking</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer style="padding: 60px 8%; border-top: 1px solid var(--glass-border); text-align: center;">
+        <div class="logo" style="margin-bottom: 30px;">AS <span style="font-weight: 300;">JEWELS</span></div>
+        <div style="display: flex; justify-content: center; gap: 30px; margin-bottom: 30px;">
+            <a href="#" style="color:var(--ivory); text-decoration:none; font-size:0.7rem;">INSTAGRAM</a>
+            <a href="#" style="color:var(--ivory); text-decoration:none; font-size:0.7rem;">FACEBOOK</a>
+            <a href="#" style="color:var(--ivory); text-decoration:none; font-size:0.7rem;">PINTEREST</a>
+        </div>
+        <p style="font-size: 0.7rem; opacity: 0.4;">© 2026 AS WEB SOLUTIONS. HANDCRAFTED LUXURY.</p>
+    </footer>
+
+    <!-- WHATSAPP -->
+    <a href="#" class="wa-float">
+        <svg fill="white" width="30" height="30" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884 0 2.225.584 3.914 1.574 5.611l-.973 3.548 3.888-.96zm11.367-7.157c-.301-.15-.1-.417-.666-.334-.179-.247-.526-.349-.783-.417-.257-.067-2.106-.883-2.106-.883-.301-.151-.518-.227-.718.075s-.769.979-.944 1.18-.351.226-.651.075-1.272-.469-2.423-1.494c-.895-.797-1.498-1.784-1.674-2.085s-.019-.465.131-.614c.135-.133.301-.351.451-.526.149-.174.199-.299.299-.499s.05-.375-.025-.526c-.075-.151-.718-1.73-.997-2.404-.265-.64-.533-.55-.718-.55h-.614c-.201 0-.527.075-.802.375s-1.053 1.028-1.053 2.507c0 1.479 1.078 2.909 1.228 3.109s2.122 3.239 5.138 4.542c.717.311 1.277.496 1.714.635.722.23 1.378.197 1.897.12.579-.086 1.781-.727 2.032-1.429.251-.702.251-1.305.176-1.43z"/></svg>
+    </a>
+
+    <script>
+        // --- LOADER ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('loader').style.display = 'none';
+                }, 1000);
+            }, 2000);
+        });
+
+        // --- CURSOR ---
+        const cursor = document.getElementById('cursor');
+        const glow = document.getElementById('cursor-glow');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            glow.style.left = e.clientX - 14 + 'px';
+            glow.style.top = e.clientY - 14 + 'px';
+        });
+
+        // --- DUST PARTICLES ---
+        const canvas = document.getElementById('dust-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let particles = [];
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2;
+                this.speedX = Math.random() * 0.5 - 0.25;
+                this.speedY = Math.random() * 0.5 - 0.25;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+                if (this.x > canvas.width) this.x = 0;
+                if (this.y > canvas.height) this.y = 0;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(212, 175, 55, 0.3)';
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        for (let i = 0; i < 100; i++) { particles.push(new Particle()); }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // --- SCROLL ANIMATIONS ---
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) nav.classList.add('scrolled');
+            else nav.classList.remove('scrolled');
+
+            const reveals = document.querySelectorAll('.reveal');
+            reveals.forEach(el => {
+                const windowHeight = window.innerHeight;
+                const revealTop = el.getBoundingClientRect().top;
+                if (revealTop < windowHeight - 100) el.classList.add('active');
+            });
+        });
+
+        // --- THEME TOGGLE ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            html.setAttribute('data-theme', current === 'dark' ? 'light' : 'dark');
+        }
+    </script>
+</body>
+</html>
